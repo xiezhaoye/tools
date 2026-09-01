@@ -14,4 +14,6 @@
 
 ## 许可
 
-各工具的许可见其各自目录下的说明；未特别注明的按 MIT 处理。
+[MIT](LICENSE)。
+
+其中 `userscripts/weibo-wide` fork 自 Greasy Fork 上的「微博宽屏版」（[script 570439](https://greasyfork.org/scripts/570439)，作者 Thomas Damai），原作同为 MIT，署名见该目录的说明。
