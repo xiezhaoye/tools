@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         微博宽屏版（logo位置菜单icon + 悬浮菜单 + 自适应内容）
 // @namespace    https://github.com/xiezhaoye/tools
-// @version      3.2.0
+// @version      3.2.3
 // @description  去掉 logo 改为菜单 icon（默认橙）；悬浮菜单只显示自身长度；隐藏右上角"视频/消息"；内容区纯 CSS 弹性自适应、左右对称留白 35px，窗口缩放实时跟手；菜单内点选项/点页面任意处自动收回
 // @author       Thomas Damai（原作） / xiezhaoye（3.x 重写）
 // @match        https://weibo.com/*
@@ -171,6 +171,25 @@
         @media (max-width: ${RIGHT_HIDE_BELOW}px) {
             ${RIGHT_SELECTOR} { display: none !important; }
         }` : ''}
+
+        /* 4b) 实测当前微博的“点图展开”不是 dialog，而是卡片内的
+               ._showPictureViewer_*。其中 ._imgWrap_* 被微博固定为 540px：
+               当前 627px 视口中它的右边界为 683.8px，令 document 的
+               scrollWidth 同样变成 684px，因而出现横向滚动。
+               将这个包装层改为父列的 100%，而不是限制原图本身；轮播图、旋转
+               及“查看大图”仍可正常工作，且页面宽度回到视口宽度。 */
+        [class*="_showPictureViewer_"] [class*="_imgWrap_"] {
+            box-sizing: border-box !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+        }
+        [class*="_showPictureViewer_"] [class*="_imgWrap_"] > div,
+        [class*="_showPictureViewer_"] [class*="_imgWrap_"] img {
+            box-sizing: border-box !important;
+            max-width: 100% !important;
+            height: auto !important;
+        }
 
         /* 5) 菜单 icon 按钮：默认橙色 */
         .weibo-wide-toggle {
